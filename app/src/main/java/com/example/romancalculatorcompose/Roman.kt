@@ -11,4 +11,8 @@ enum class Symbol(val value: Int) {
     M(1000),
 }
 
-data class Numeral(val symbols: List<Symbol>, val positive: Boolean = true)
+data class Numeral(val symbols: List<Symbol> = emptyList(), val positive: Boolean = true) {
+    override fun toString(): String {
+        return (if (positive) "" else "-") + symbols.joinToString("")
+    }
+}
