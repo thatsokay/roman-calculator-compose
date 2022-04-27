@@ -3,12 +3,12 @@ package com.example.romancalculatorcompose
 import com.example.romancalculatorcompose.Symbol.*
 import kotlin.math.abs
 
-fun romanToInt(roman: Numeral): Int? {
-    if (roman.symbols.isEmpty()) {
+fun romanToInt(numeral: Numeral): Int? {
+    if (numeral.isEmpty()) {
         return null
     }
     var result = 0
-    for (window in roman.symbols.windowed(size = 4, step = 1, partialWindows = true)) {
+    for (window in numeral.windowed(size = 4, step = 1, partialWindows = true)) {
         when (window[0]) {
             N -> {
                 // N cannot be followed by any symbols
@@ -56,7 +56,7 @@ fun romanToInt(roman: Numeral): Int? {
             }
         }
     }
-    return if (roman.positive) result else -result
+    return if (numeral.negative) -result else result
 }
 
 data class PlaceSymbols(val one: Symbol, val five: Symbol?, val ten: Symbol?)
@@ -67,7 +67,7 @@ fun intToRoman(number: Int): Numeral? {
         return null
     }
     if (number == 0) {
-        return Numeral(listOf(N))
+        return Numeral(N)
     }
     val digits = listOf(4000, 1000, 100, 10, 1)
         .windowed(2)
@@ -110,5 +110,5 @@ fun intToRoman(number: Int): Numeral? {
             }
         }
     }
-    return Numeral(resultSymbols, positive = number >= 0)
+    return Numeral(*resultSymbols.toTypedArray(), negative = number < 0)
 }

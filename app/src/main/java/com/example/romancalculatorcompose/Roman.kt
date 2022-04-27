@@ -11,8 +11,22 @@ enum class Symbol(val value: Int) {
     M(1000),
 }
 
-data class Numeral(val symbols: List<Symbol> = emptyList(), val positive: Boolean = true) {
-    override fun toString(): String {
-        return (if (positive) "" else "-") + symbols.joinToString("")
+class Numeral(vararg symbols: Symbol, val negative: Boolean = false) :
+    List<Symbol> by listOf(*symbols) {
+
+    override fun equals(other: Any?): Boolean {
+        if (other !is Numeral) {
+            return false
+        }
+        if (this.size != other.size) {
+            return false
+        }
+        if (this.negative != other.negative) {
+            return false
+        }
+        return this.zip(other).all { (a, b) -> a == b }
     }
+
+    // TODO: Print `Numeral(N, negative = true)` as `"N"`
+    override fun toString(): String = (if (this.negative) "-" else "") + this.joinToString("")
 }
