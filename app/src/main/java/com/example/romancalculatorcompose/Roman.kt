@@ -14,6 +14,8 @@ enum class Symbol(val value: Int) {
 class Numeral(vararg symbols: Symbol, val negative: Boolean = false) :
     List<Symbol> by listOf(*symbols) {
 
+    val value = romanToInt(this)
+
     override fun equals(other: Any?): Boolean {
         if (other !is Numeral) {
             return false

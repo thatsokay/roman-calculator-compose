@@ -16,6 +16,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.romancalculatorcompose.Symbol.*
@@ -35,7 +36,8 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Calculator() {
     val (result, setResult) = remember { mutableStateOf<Int?>(null) }
-    val input = remember { mutableStateListOf<Symbol>() }
+    val inputSymbols = remember { mutableStateListOf<Symbol>() }
+    val input = Numeral(*inputSymbols.toTypedArray())
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -62,7 +64,7 @@ fun Calculator() {
                 ) {
                     it.forEach {
                         TextButton(
-                            onClick = { input.add(it) },
+                            onClick = { inputSymbols.add(it) },
                             modifier = Modifier
                                 .fillMaxSize()
                                 .weight(1f),
@@ -85,20 +87,30 @@ fun CalculatorPreview() {
 }
 
 @Composable
-fun Display(result: Int?, input: List<Symbol>, modifier: Modifier = Modifier) {
+fun Display(result: Int?, input: Numeral, modifier: Modifier = Modifier) {
     val text = when {
-        input.isNotEmpty() -> input.joinToString("")
+        input.isNotEmpty() -> input.toString()
         result == null -> ""
         else -> intToRoman(result)?.toString() ?: "nope"
     }
-    Text(text, textAlign = TextAlign.Right, modifier = modifier)
+    val color = if (input.isNotEmpty() && input.value == null) {
+        Color.Red
+    } else {
+        Color.Black
+    }
+    Text(
+        text,
+        textAlign = TextAlign.Right,
+        color = color,
+        modifier = modifier
+    )
 }
 
 @Preview(showBackground = true)
 @Composable
 fun DisplayResultPreview() {
     RomanCalculatorComposeTheme {
-        Display(result = 4, input = emptyList())
+        Display(result = 4, input = Numeral())
     }
 }
 
@@ -106,7 +118,7 @@ fun DisplayResultPreview() {
 @Composable
 fun DisplayNullResultPreview() {
     RomanCalculatorComposeTheme {
-        Display(result = null, input = emptyList())
+        Display(result = null, input = Numeral())
     }
 }
 
@@ -114,7 +126,7 @@ fun DisplayNullResultPreview() {
 @Composable
 fun DisplayInvalidResultPreview() {
     RomanCalculatorComposeTheme {
-        Display(4000, input = emptyList())
+        Display(4000, input = Numeral())
     }
 }
 
@@ -122,6 +134,14 @@ fun DisplayInvalidResultPreview() {
 @Composable
 fun DisplayInputPreview() {
     RomanCalculatorComposeTheme {
-        Display(result = 4, input = listOf(X))
+        Display(result = 4, input = Numeral(X))
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun DisplayInvalidInputPreview() {
+    RomanCalculatorComposeTheme {
+        Display(result = 4, input = Numeral(V, V))
     }
 }
