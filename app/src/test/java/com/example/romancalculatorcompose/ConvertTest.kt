@@ -35,6 +35,7 @@ class RomanToIntTest(private val roman: Numeral, private val expected: Int?) {
             arrayOf(Numeral(V, I, V), null),
             arrayOf(Numeral(I, V, I), null),
             arrayOf(Numeral(I, I, I, I), null),
+            arrayOf(Numeral(I, N), null)
         )
     }
 

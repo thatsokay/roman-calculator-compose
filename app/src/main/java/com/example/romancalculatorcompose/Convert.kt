@@ -7,14 +7,14 @@ fun romanToInt(numeral: Numeral): Int? {
     if (numeral.isEmpty()) {
         return null
     }
+    if (numeral.size == 1 && numeral[0] == N) {
+        return 0
+    }
     var result = 0
     for (window in numeral.windowed(size = 4, step = 1, partialWindows = true)) {
         when (window[0]) {
             N -> {
-                // N cannot be followed by any symbols
-                if (window.size != 1) {
-                    return null
-                }
+                return null
             }
             I, X, C, M -> {
                 if (window.size > 1) {
