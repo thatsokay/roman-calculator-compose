@@ -88,16 +88,19 @@ fun CalculatorPreview() {
 
 @Composable
 fun Display(result: Int?, input: Numeral, modifier: Modifier = Modifier) {
-    val text = when {
-        input.isNotEmpty() -> input.toString()
-        result == null -> ""
-        else -> intToRoman(result)?.toString() ?: "nope"
+    val (text, invalidValue) = when {
+        input.isNotEmpty() -> Pair(input.toString(), input.value == null)
+        result == null -> Pair("", false)
+        else -> {
+            val romanResult = intToRoman(result)
+            if (romanResult == null) {
+                Pair("nope", true)
+            } else {
+                Pair(romanResult.toString(), false)
+            }
+        }
     }
-    val color = if (input.isNotEmpty() && input.value == null) {
-        Color.Red
-    } else {
-        Color.Black
-    }
+    val color = if (invalidValue) Color.Red else Color.Black
     Text(
         text,
         textAlign = TextAlign.Right,
