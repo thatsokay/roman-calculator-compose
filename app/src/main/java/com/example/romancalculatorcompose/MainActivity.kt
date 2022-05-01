@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -62,7 +63,8 @@ fun Calculator() {
             val deleteButton = @Composable {
                 TextButton(
                     onClick = { inputSymbols.removeLastOrNull() },
-                    modifier = buttonModifier
+                    modifier = buttonModifier,
+                    shape = CircleShape,
                 ) {
                     Text("Del")
                 }
@@ -75,7 +77,8 @@ fun Calculator() {
                         inputSymbols.clear()
                         setLastOperation(PLUS)
                     },
-                    modifier = buttonModifier
+                    modifier = buttonModifier,
+                    shape = CircleShape,
                 ) {
                     Text("Clear")
                 }
@@ -102,7 +105,8 @@ fun Calculator() {
                         setResult(newResult)
                         setLastOperation(operation)
                     },
-                    modifier = buttonModifier
+                    modifier = buttonModifier,
+                    shape = CircleShape,
                 ) {
                     Text(operation.toString())
                 }
@@ -111,7 +115,8 @@ fun Calculator() {
             fun inputButton(symbol: Symbol) = @Composable {
                 TextButton(
                     onClick = { inputSymbols.add(symbol) },
-                    modifier = buttonModifier
+                    modifier = buttonModifier,
+                    shape = CircleShape,
                 ) {
                     Text(symbol.toString())
                 }
