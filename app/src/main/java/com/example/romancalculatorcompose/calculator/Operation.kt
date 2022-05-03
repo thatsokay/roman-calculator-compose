@@ -1,4 +1,4 @@
-package com.example.romancalculatorcompose
+package com.example.romancalculatorcompose.calculator
 
 import java.util.function.BinaryOperator
 import java.util.function.IntBinaryOperator

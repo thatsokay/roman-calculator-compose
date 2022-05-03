@@ -1,6 +1,6 @@
-package com.example.romancalculatorcompose
+package com.example.romancalculatorcompose.roman
 
-import com.example.romancalculatorcompose.Symbol.*
+import com.example.romancalculatorcompose.roman.Symbol.*
 import kotlin.math.abs
 
 fun romanToInt(numeral: Numeral): Int? {

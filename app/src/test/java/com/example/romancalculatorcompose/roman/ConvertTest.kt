@@ -1,6 +1,6 @@
-package com.example.romancalculatorcompose
+package com.example.romancalculatorcompose.roman
 
-import com.example.romancalculatorcompose.Symbol.*
+import com.example.romancalculatorcompose.roman.Symbol.*
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith

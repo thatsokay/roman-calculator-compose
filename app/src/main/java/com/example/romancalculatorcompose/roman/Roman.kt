@@ -1,4 +1,4 @@
-package com.example.romancalculatorcompose
+package com.example.romancalculatorcompose.roman
 
 enum class Symbol(val value: Int) {
     N(0),
