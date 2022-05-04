@@ -3,15 +3,15 @@ package com.example.romancalculatorcompose.roman
 import com.example.romancalculatorcompose.roman.Symbol.*
 import kotlin.math.abs
 
-fun romanToInt(numeral: Numeral): Int? {
-    if (numeral.isEmpty()) {
+fun romanToInt(roman: Roman): Int? {
+    if (roman.isEmpty()) {
         return null
     }
-    if (numeral.size == 1 && numeral[0] == N) {
+    if (roman.size == 1 && roman[0] == N) {
         return 0
     }
     var result = 0
-    for (window in numeral.windowed(size = 4, step = 1, partialWindows = true)) {
+    for (window in roman.windowed(size = 4, step = 1, partialWindows = true)) {
         when (window[0]) {
             N -> {
                 return null
@@ -56,18 +56,27 @@ fun romanToInt(numeral: Numeral): Int? {
             }
         }
     }
-    return if (numeral.negative) -result else result
+    return result
+}
+
+fun signedRomanToInt(roman: SignedRoman): Int? {
+    val result = romanToInt(roman)
+    return when {
+        result == null -> null
+        roman.negative -> -result
+        else -> result
+    }
 }
 
 data class PlaceSymbols(val one: Symbol, val five: Symbol?, val ten: Symbol?)
 
-fun intToRoman(number: Int): Numeral? {
+fun intToRoman(number: Int): SignedRoman? {
     val absNumber = abs(number)
     if (absNumber >= 4000) {
         return null
     }
     if (number == 0) {
-        return Numeral(N)
+        return SignedRoman(N)
     }
     val digits = listOf(4000, 1000, 100, 10, 1)
         .windowed(2)
@@ -110,5 +119,5 @@ fun intToRoman(number: Int): Numeral? {
             }
         }
     }
-    return Numeral(*resultSymbols.toTypedArray(), negative = number < 0)
+    return SignedRoman(*resultSymbols.toTypedArray(), negative = number < 0)
 }

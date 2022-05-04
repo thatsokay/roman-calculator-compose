@@ -1,11 +1,8 @@
 package com.example.romancalculatorcompose.calculator
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
-import com.example.romancalculatorcompose.roman.Numeral
+import com.example.romancalculatorcompose.roman.Roman
 import com.example.romancalculatorcompose.roman.Symbol
 
 
@@ -14,9 +11,7 @@ class CalculatorViewModel : ViewModel() {
         private set
     private var lastOperation by mutableStateOf<Operation>(Operation.PLUS)
     private val inputSymbols = mutableStateListOf<Symbol>()
-
-    val input: Numeral
-        get() = Numeral(*inputSymbols.toTypedArray())
+    val input by derivedStateOf { Roman(*inputSymbols.toTypedArray()) }
 
     fun enterSymbol(symbol: Symbol) {
         inputSymbols.add(symbol)

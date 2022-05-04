@@ -11,13 +11,27 @@ enum class Symbol(val value: Int) {
     M(1000),
 }
 
-class Numeral(vararg symbols: Symbol, val negative: Boolean = false) :
-    List<Symbol> by listOf(*symbols) {
-
-    val value = romanToInt(this)
+open class Roman(vararg symbols: Symbol) : List<Symbol> by listOf(*symbols) {
+    open val value by lazy { romanToInt(this) }
 
     override fun equals(other: Any?): Boolean {
-        if (other !is Numeral) {
+        if (other !is Roman) {
+            return false
+        }
+        if (this.size != other.size) {
+            return false
+        }
+        return this.zip(other).all { (a, b) -> a == b }
+    }
+
+    override fun toString(): String = this.joinToString("")
+}
+
+class SignedRoman(vararg symbols: Symbol, val negative: Boolean = false) : Roman(*symbols) {
+    override val value by lazy { signedRomanToInt(this) }
+
+    override fun equals(other: Any?): Boolean {
+        if (other !is SignedRoman) {
             return false
         }
         if (this.size != other.size) {

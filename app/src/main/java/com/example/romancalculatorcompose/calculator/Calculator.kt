@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.romancalculatorcompose.roman.Numeral
+import com.example.romancalculatorcompose.roman.Roman
 import com.example.romancalculatorcompose.roman.Symbol
 import com.example.romancalculatorcompose.roman.Symbol.*
 import com.example.romancalculatorcompose.roman.intToRoman
@@ -23,7 +23,7 @@ import com.example.romancalculatorcompose.ui.theme.RomanCalculatorComposeTheme
 @Composable
 fun Calculator(
     result: Int?,
-    input: Numeral,
+    input: Roman,
     onSymbolPressed: (Symbol) -> Unit,
     onOperationPressed: (Operation) -> Unit,
     onDeletePressed: () -> Unit,
@@ -123,7 +123,7 @@ fun CalculatorPreview(viewModel: CalculatorViewModel = CalculatorViewModel()) {
 }
 
 @Composable
-private fun Display(result: Int?, input: Numeral, modifier: Modifier = Modifier) {
+private fun Display(result: Int?, input: Roman, modifier: Modifier = Modifier) {
     val (text, invalidValue) = when {
         input.isNotEmpty() -> Pair(input.toString(), input.value == null)
         result == null -> Pair("", false)
@@ -149,7 +149,7 @@ private fun Display(result: Int?, input: Numeral, modifier: Modifier = Modifier)
 @Composable
 fun DisplayResultPreview() {
     RomanCalculatorComposeTheme {
-        Display(result = 4, input = Numeral())
+        Display(result = 4, input = Roman())
     }
 }
 
@@ -157,7 +157,7 @@ fun DisplayResultPreview() {
 @Composable
 fun DisplayNullResultPreview() {
     RomanCalculatorComposeTheme {
-        Display(result = null, input = Numeral())
+        Display(result = null, input = Roman())
     }
 }
 
@@ -165,7 +165,7 @@ fun DisplayNullResultPreview() {
 @Composable
 fun DisplayInvalidResultPreview() {
     RomanCalculatorComposeTheme {
-        Display(4000, input = Numeral())
+        Display(4000, input = Roman())
     }
 }
 
@@ -173,7 +173,7 @@ fun DisplayInvalidResultPreview() {
 @Composable
 fun DisplayInputPreview() {
     RomanCalculatorComposeTheme {
-        Display(result = 4, input = Numeral(X))
+        Display(result = 4, input = Roman(X))
     }
 }
 
@@ -181,6 +181,6 @@ fun DisplayInputPreview() {
 @Composable
 fun DisplayInvalidInputPreview() {
     RomanCalculatorComposeTheme {
-        Display(result = 4, input = Numeral(V, V))
+        Display(result = 4, input = Roman(V, V))
     }
 }
