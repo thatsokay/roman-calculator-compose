@@ -96,14 +96,12 @@ fun intToRoman(number: Int): SignedRoman? {
                     throw Exception("Unreachable")
                 }
                 resultSymbols.addAll(listOf(one, ten))
-                continue
             }
             digit == 4 -> {
                 if (five == null) {
                     throw Exception("Unreachable")
                 }
                 resultSymbols.addAll(listOf(one, five))
-                continue
             }
             digit >= 5 -> {
                 if (five == null) {
@@ -111,11 +109,9 @@ fun intToRoman(number: Int): SignedRoman? {
                 }
                 resultSymbols.add(five)
                 resultSymbols.addAll(List(digit - 5) { one })
-                continue
             }
             digit >= 1 -> {
                 resultSymbols.addAll(List(digit) { one })
-                continue
             }
         }
     }

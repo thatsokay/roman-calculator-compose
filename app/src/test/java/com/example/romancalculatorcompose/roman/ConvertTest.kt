@@ -46,25 +46,25 @@ class RomanToIntTest(private val roman: Roman, private val expected: Int?) {
 }
 
 @RunWith(Parameterized::class)
-class IntToRomanTest(private val number: Int, private val expected: Roman?) {
+class IntToRomanTest(private val number: Int, private val expected: SignedRoman?) {
     companion object {
         @JvmStatic
         @Parameterized.Parameters
         fun data(): Collection<Array<Any?>> = listOf(
-            arrayOf(1, Roman(I)),
-            arrayOf(5, Roman(V)),
-            arrayOf(10, Roman(X)),
-            arrayOf(50, Roman(L)),
-            arrayOf(100, Roman(C)),
-            arrayOf(500, Roman(D)),
-            arrayOf(1000, Roman(M)),
-            arrayOf(7, Roman(V, I, I)),
-            arrayOf(101, Roman(C, I)),
-            arrayOf(4, Roman(I, V)),
-            arrayOf(9, Roman(I, X)),
-            arrayOf(0, Roman(N)),
-            arrayOf(-1, Roman(I, negative = true)), // Negative numbers
-            arrayOf(-4, Roman(I, V, negative = true)),
+            arrayOf(1, SignedRoman(I)),
+            arrayOf(5, SignedRoman(V)),
+            arrayOf(10, SignedRoman(X)),
+            arrayOf(50, SignedRoman(L)),
+            arrayOf(100, SignedRoman(C)),
+            arrayOf(500, SignedRoman(D)),
+            arrayOf(1000, SignedRoman(M)),
+            arrayOf(7, SignedRoman(V, I, I)),
+            arrayOf(101, SignedRoman(C, I)),
+            arrayOf(4, SignedRoman(I, V)),
+            arrayOf(9, SignedRoman(I, X)),
+            arrayOf(0, SignedRoman(N)),
+            arrayOf(-1, SignedRoman(I, negative = true)), // Negative numbers
+            arrayOf(-4, SignedRoman(I, V, negative = true)),
             arrayOf(4000, null), // Big numbers
             arrayOf(9000, null),
             arrayOf(250000, null),
