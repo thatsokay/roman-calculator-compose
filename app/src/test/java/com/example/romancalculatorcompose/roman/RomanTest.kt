@@ -2,6 +2,7 @@ package com.example.romancalculatorcompose.roman
 
 import com.example.romancalculatorcompose.roman.Symbol.*
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertThrows
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
@@ -12,7 +13,8 @@ class RomanToIntTest(private val roman: Roman, private val expected: Int?) {
         @JvmStatic
         @Parameterized.Parameters
         fun data(): Collection<Array<Any?>> = listOf(
-            arrayOf(Roman(N), 0), // Simple numbers
+            // Simple numbers
+            arrayOf(Roman(N), 0),
             arrayOf(Roman(I), 1),
             arrayOf(Roman(V), 5),
             arrayOf(Roman(X), 10),
@@ -20,15 +22,18 @@ class RomanToIntTest(private val roman: Roman, private val expected: Int?) {
             arrayOf(Roman(C), 100),
             arrayOf(Roman(D), 500),
             arrayOf(Roman(M), 1000),
-            arrayOf(Roman(V, I, I), 7), // Compound numbers
+            // Compound numbers
+            arrayOf(Roman(V, I, I), 7),
             arrayOf(Roman(C, X, I), 111),
-            arrayOf(Roman(I, V), 4), // Subtractions
+            // Subtractions
+            arrayOf(Roman(I, V), 4),
             arrayOf(Roman(I, X), 9),
             arrayOf(Roman(X, C), 90),
             arrayOf(Roman(X, I, X), 19),
             arrayOf(Roman(X, C, I), 91),
             arrayOf(Roman(), null),
-            arrayOf(Roman(I, C), null), // Invalid ordering
+            // Invalid ordering
+            arrayOf(Roman(I, C), null),
             arrayOf(Roman(V, X), null),
             arrayOf(Roman(I, I, V), null),
             arrayOf(Roman(V, V), null),
@@ -41,7 +46,11 @@ class RomanToIntTest(private val roman: Roman, private val expected: Int?) {
 
     @Test
     fun convert() {
-        assertEquals(expected, romanToInt(roman))
+        if (expected == null) {
+            assertThrows(NumberFormatException::class.java) { roman.toInt() }
+        } else {
+            assertEquals(expected, roman.toInt())
+        }
     }
 }
 
@@ -51,6 +60,7 @@ class IntToRomanTest(private val number: Int, private val expected: SignedRoman?
         @JvmStatic
         @Parameterized.Parameters
         fun data(): Collection<Array<Any?>> = listOf(
+            // Simple numbers
             arrayOf(1, SignedRoman(I)),
             arrayOf(5, SignedRoman(V)),
             arrayOf(10, SignedRoman(X)),
@@ -58,14 +68,17 @@ class IntToRomanTest(private val number: Int, private val expected: SignedRoman?
             arrayOf(100, SignedRoman(C)),
             arrayOf(500, SignedRoman(D)),
             arrayOf(1000, SignedRoman(M)),
+            // Compound numbers
             arrayOf(7, SignedRoman(V, I, I)),
             arrayOf(101, SignedRoman(C, I)),
             arrayOf(4, SignedRoman(I, V)),
             arrayOf(9, SignedRoman(I, X)),
             arrayOf(0, SignedRoman(N)),
-            arrayOf(-1, SignedRoman(I, negative = true)), // Negative numbers
+            // Negative numbers
+            arrayOf(-1, SignedRoman(I, negative = true)),
             arrayOf(-4, SignedRoman(I, V, negative = true)),
-            arrayOf(4000, null), // Big numbers
+            // Big numbers
+            arrayOf(4000, null),
             arrayOf(9000, null),
             arrayOf(250000, null),
         )
@@ -73,6 +86,10 @@ class IntToRomanTest(private val number: Int, private val expected: SignedRoman?
 
     @Test
     fun convert() {
-        assertEquals(expected, intToRoman(number))
+        if (expected == null) {
+            assertThrows(Exception::class.java) { number.toSignedRoman() }
+        } else {
+            assertEquals(expected, number.toSignedRoman())
+        }
     }
 }

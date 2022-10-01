@@ -17,7 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.romancalculatorcompose.roman.Roman
 import com.example.romancalculatorcompose.roman.Symbol
 import com.example.romancalculatorcompose.roman.Symbol.*
-import com.example.romancalculatorcompose.roman.intToRoman
+import com.example.romancalculatorcompose.roman.toSignedRoman
 import com.example.romancalculatorcompose.ui.theme.RomanCalculatorComposeTheme
 
 @Composable
@@ -128,11 +128,10 @@ private fun Display(result: Int?, input: Roman, modifier: Modifier = Modifier) {
         input.isNotEmpty() -> Pair(input.toString(), input.value == null)
         result == null -> Pair("", false)
         else -> {
-            val romanResult = intToRoman(result)
-            if (romanResult == null) {
+            try {
+                Pair(result.toSignedRoman().toString(), false)
+            } catch (e: Exception) {
                 Pair("nope", true)
-            } else {
-                Pair(romanResult.toString(), false)
             }
         }
     }
