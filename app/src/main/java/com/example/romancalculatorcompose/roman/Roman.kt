@@ -115,6 +115,12 @@ class SignedRoman(vararg symbols: Symbol, val negative: Boolean = false) : Roman
 }
 
 private data class PlaceSymbols(val one: Symbol, val five: Symbol?, val ten: Symbol?)
+private val placesSymbols = listOf(
+    PlaceSymbols(Symbol.M, null, null),
+    PlaceSymbols(Symbol.C, Symbol.D, Symbol.M),
+    PlaceSymbols(Symbol.X, Symbol.L, Symbol.C),
+    PlaceSymbols(Symbol.I, Symbol.V, Symbol.X)
+)
 
 fun Int.toSignedRoman(): SignedRoman {
     val absNumber = abs(this)
@@ -127,12 +133,6 @@ fun Int.toSignedRoman(): SignedRoman {
     val digits = listOf(4000, 1000, 100, 10, 1)
         .windowed(2)
         .map { window -> (absNumber % window[0]) / window[1] }
-    val placesSymbols = listOf(
-        PlaceSymbols(Symbol.M, null, null),
-        PlaceSymbols(Symbol.C, Symbol.D, Symbol.M),
-        PlaceSymbols(Symbol.X, Symbol.L, Symbol.C),
-        PlaceSymbols(Symbol.I, Symbol.V, Symbol.X)
-    )
     val resultSymbols = mutableListOf<Symbol>()
     for ((digit, placeSymbols) in digits.zip(placesSymbols)) {
         val (one, five, ten) = placeSymbols

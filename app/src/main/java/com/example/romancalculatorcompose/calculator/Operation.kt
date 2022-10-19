@@ -21,7 +21,7 @@ enum class Operation : BinaryOperator<Int>, IntBinaryOperator {
         override fun toString(): String = "÷"
     },
     EQUALS {
-        override fun apply(t: Int, u: Int): Int = t
+        override fun apply(t: Int, u: Int): Int = u
         override fun toString(): String = "="
     };
 

@@ -9,7 +9,7 @@ import com.example.romancalculatorcompose.roman.Symbol
 class CalculatorViewModel : ViewModel() {
     var result by mutableStateOf<Int?>(null)
         private set
-    private var lastOperation by mutableStateOf<Operation>(Operation.PLUS)
+    var operation by mutableStateOf<Operation>(Operation.PLUS)
     private val inputSymbols = mutableStateListOf<Symbol>()
     val input by derivedStateOf { Roman(*inputSymbols.toTypedArray()) }
 
@@ -17,10 +17,10 @@ class CalculatorViewModel : ViewModel() {
         inputSymbols.add(symbol)
     }
 
-    fun enterOperation(operation: Operation) {
+    fun enterOperation(nextOperation: Operation) {
         if (inputSymbols.isEmpty()) {
             // Just change operation if empty input
-            lastOperation = operation
+            operation = nextOperation
             return
         }
         val inputValue = input.value
@@ -29,13 +29,13 @@ class CalculatorViewModel : ViewModel() {
             return
         }
         val newResult = try {
-            lastOperation.apply(result ?: 0, inputValue)
+            operation.apply(result ?: 0, inputValue)
         } catch (e: ArithmeticException) {
             // Catch divide by zero and set result to zero
             0
         }
         result = newResult
-        lastOperation = operation
+        operation = nextOperation
     }
 
     fun delete() {
@@ -45,6 +45,6 @@ class CalculatorViewModel : ViewModel() {
     fun clear() {
         result = null
         inputSymbols.clear()
-        lastOperation = Operation.PLUS
+        operation = Operation.PLUS
     }
 }

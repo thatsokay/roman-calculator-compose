@@ -8,6 +8,7 @@ fun CalculatorScreen(viewModel: CalculatorViewModel = viewModel()) {
     Calculator(
         result = viewModel.result,
         input = viewModel.input,
+        operation = viewModel.operation,
         onSymbolPressed = { viewModel.enterSymbol(it) },
         onOperationPressed = { viewModel.enterOperation(it) },
         onDeletePressed = { viewModel.delete() },
