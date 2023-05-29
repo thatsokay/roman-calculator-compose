@@ -1,9 +1,6 @@
 package com.example.romancalculatorcompose.calculator
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -14,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.romancalculatorcompose.roman.Roman
 import com.example.romancalculatorcompose.roman.Symbol
 import com.example.romancalculatorcompose.roman.Symbol.*
@@ -41,7 +39,8 @@ fun Calculator(
                 operation = operation,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(1f),
+                    .weight(1f)
+                    .padding(horizontal = 16.dp),
             )
 
             val buttonModifier = Modifier
@@ -88,20 +87,29 @@ fun Calculator(
                 }
             }
 
-            arrayOf(
-                arrayOf(deleteButton, clearButton, operationButton(Operation.DIVIDE)),
-                arrayOf(inputButton(D), inputButton(M), operationButton(Operation.TIMES)),
-                arrayOf(inputButton(L), inputButton(C), operationButton(Operation.MINUS)),
-                arrayOf(inputButton(V), inputButton(X), operationButton(Operation.PLUS)),
-                arrayOf(inputButton(N), inputButton(I), operationButton(Operation.EQUALS)),
-            ).forEach {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f),
-                ) {
-                    it.forEach {
-                        it()
+            Surface(
+                color = MaterialTheme.colors.surface,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(5f),
+            ) {
+                Column {
+                    arrayOf(
+                        arrayOf(deleteButton, clearButton, operationButton(Operation.DIVIDE)),
+                        arrayOf(inputButton(D), inputButton(M), operationButton(Operation.TIMES)),
+                        arrayOf(inputButton(L), inputButton(C), operationButton(Operation.MINUS)),
+                        arrayOf(inputButton(V), inputButton(X), operationButton(Operation.PLUS)),
+                        arrayOf(inputButton(N), inputButton(I), operationButton(Operation.EQUALS)),
+                    ).forEach {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(1f),
+                        ) {
+                            it.forEach {
+                                it()
+                            }
+                        }
                     }
                 }
             }
@@ -155,13 +163,13 @@ private fun Display(
         Row {
             Text(
                 resultText,
-                color = if (resultIsValid) Color.Black else Color.Red,
+                color = if (resultIsValid) Color.Black else MaterialTheme.colors.secondaryVariant,
             )
             Text(operationText)
         }
         Text(
             inputText,
-            color = if (inputIsValid) Color.Black else Color.Red,
+            color = if (inputIsValid) Color.Black else MaterialTheme.colors.secondaryVariant,
         )
     }
 }

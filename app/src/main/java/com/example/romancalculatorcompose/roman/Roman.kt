@@ -47,6 +47,7 @@ open class Roman(vararg symbols: Symbol) : List<Symbol> by listOf(*symbols) {
                 Symbol.N -> {
                     throw NumberFormatException()
                 }
+
                 Symbol.I, Symbol.X, Symbol.C, Symbol.M -> {
                     if (window.size > 1) {
                         val nextSymbolFactor = window[1].value / window[0].value
@@ -74,6 +75,7 @@ open class Roman(vararg symbols: Symbol) : List<Symbol> by listOf(*symbols) {
                     }
                     result += window[0].value
                 }
+
                 Symbol.V, Symbol.L, Symbol.D -> {
                     // Must be followed by smaller symbol (eg. VV)
                     if (window.size > 1 && window[1].value >= window[0].value) {
@@ -99,14 +101,17 @@ class SignedRoman(vararg symbols: Symbol, val negative: Boolean = false) : Roman
         if (this.size != other.size) {
             return false
         }
+        if (this.size == 1 && this[0] == Symbol.N && other[0] == Symbol.N) {
+            return true
+        }
         if (this.negative != other.negative) {
             return false
         }
         return this.zip(other).all { (a, b) -> a == b }
     }
 
-    // TODO: Print `Numeral(N, negative = true)` as `"N"`
-    override fun toString(): String = (if (this.negative) "-" else "") + this.joinToString("")
+    override fun toString(): String =
+        (if (this.negative && this != SignedRoman(Symbol.N)) "-" else "") + this.joinToString("")
 
     override fun toInt(): Int {
         val result = super.toInt()
@@ -115,6 +120,7 @@ class SignedRoman(vararg symbols: Symbol, val negative: Boolean = false) : Roman
 }
 
 private data class PlaceSymbols(val one: Symbol, val five: Symbol?, val ten: Symbol?)
+
 private val placesSymbols = listOf(
     PlaceSymbols(Symbol.M, null, null),
     PlaceSymbols(Symbol.C, Symbol.D, Symbol.M),
@@ -143,12 +149,14 @@ fun Int.toSignedRoman(): SignedRoman {
                 }
                 resultSymbols.addAll(listOf(one, ten))
             }
+
             digit == 4 -> {
                 if (five == null) {
                     throw Exception("Unreachable")
                 }
                 resultSymbols.addAll(listOf(one, five))
             }
+
             digit >= 5 -> {
                 if (five == null) {
                     throw Exception("Unreachable")
@@ -156,6 +164,7 @@ fun Int.toSignedRoman(): SignedRoman {
                 resultSymbols.add(five)
                 resultSymbols.addAll(List(digit - 5) { one })
             }
+
             digit >= 1 -> {
                 resultSymbols.addAll(List(digit) { one })
             }

@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.example.romancalculatorcompose.calculator.CalculatorScreen
-import com.example.romancalculatorcompose.calculator.CalculatorViewModel
 import com.example.romancalculatorcompose.ui.theme.RomanCalculatorComposeTheme
 
 class MainActivity : ComponentActivity() {
